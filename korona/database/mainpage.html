@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KoronaWirus</title>
+</head>
+<body>
+
+<div class="table-responsive">
+    <!-- cases table -->
+    <table class="table align-items-center table-flush sortable ">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Confirmed</th>
+            <th scope="col">Recovered</th>
+            <th scope="col">Deaths</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="font-weight-bold">{{ "Poland" | truncatechars:18 }}</td>
+            <td>{{ Country.Infected| intcomma }}</td>
+            <td>{{ Country.Recoverd | intcomma }}</td>
+            <td>{{ Country.Dead | intcomma }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</body>
+</html>
