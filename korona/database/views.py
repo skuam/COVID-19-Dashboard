@@ -1,12 +1,17 @@
 # Create your views here.
+from django.shortcuts import render
 
 from .models import *
 
 
-def index(request):
-    data = Country.objects.Last()
+def mainpage(request):
+    # data = Country.objects.Last()
 
     stu = {
-        "Country": data
+        "Country": {
+            'Infected': 1000,
+            'Recovered': 1,
+            'Dead':  10
+        }
     }
-    return render_to_response("database/mainpage.html", stu)
+    return render(request, "mainpage/mainpage.html", stu)
