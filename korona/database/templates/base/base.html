@@ -11,20 +11,19 @@
     <header>
         <div class="header-wrapper">
             <a class="active" href="#">Home</a>
-            <a href="#">News</a>
-            <a href="#">Contact</a>
+            <a href="#">Wykresy i Trendy</a>
+            <a href="#">Obecne Przewidywania</a>
             <a href="#">About</a>
         </div>
     </header>
 
     <div class="content-wrapper">
+        <div class="table-content">
+            {% block content %}{% endblock %}
+        </div>
         <div class="map-wrapper">
         <object type="text/html" style="transform-origin: top left;" data="https://hgis.uw.edu/virus/">
         </object>
-
-        </div>
-        <div class="table-content">
-            {% block content %}{% endblock %}
         </div>
     </div>
 
