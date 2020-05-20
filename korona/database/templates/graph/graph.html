@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+{% block content %}
+<body>
+    {% if graph %}
+    {{ graph|safe }}
+    {% else %}
+    <p>No graph was provided.</p>
+    {% endif %}
+</body>
+{% endblock content %}

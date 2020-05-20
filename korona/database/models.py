@@ -8,5 +8,4 @@ class Country(models.Model):
     Infected = models.IntegerField()
     Recovered = models.IntegerField()
     Dead = models.IntegerField()
-
     objects = DataFrameManager()
