@@ -1,0 +1,45 @@
+.table-responsive {
+    width: 100%;
+    padding: 2rem 0 4rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    height: 500px;
+}
+
+thead {
+    display: block;
+    width: 100%;
+}
+
+thead tr {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 2fr;
+    border-bottom: 1px solid #999;
+}
+
+thead th {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+tbody {
+    overflow-x: auto;
+    display: block;
+    height: 100%;
+}
+
+tbody tr {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 2fr;
+    border-bottom: 1px solid #999;
+}
+
+tbody td {
+    display: block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+}

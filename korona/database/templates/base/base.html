@@ -5,27 +5,21 @@
     <meta charset="UTF-8">
     <title>KoronaWirus</title>
     <link rel="stylesheet" type="text/css" href="{% static 'base/base.css' %}">
+    {% block mycss %} {% endblock mycss %}
 </head>
 <body>
 
     <header>
         <div class="header-wrapper">
-            <a class="active" href="#">Home</a>
-            <a href="/wykres">Wykresy i Trendy</a>
+            <a class="{% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+            <a class="{% if request.path == '/wykres' %}active{% endif %}" href="/wykres">Wykresy i Trendy</a>
             <a href="#">Obecne Przewidywania</a>
-            <a href="#">About</a>
         </div>
     </header>
 
 
     <div class="content-wrapper">
-        <div class="table-content">
-            {% block content %}{% endblock %}
-        </div>
-        <div class="map-wrapper">
-        <object type="text/html" style="transform-origin: top left;" data="https://hgis.uw.edu/virus/">
-        </object>
-        </div>
+        {% block content %}{% endblock %}
     </div>
 </body>
 </html>

@@ -1,10 +1,38 @@
 {% extends "base/base.html" %}
+{% load static %}
+{% block mycss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'graph/graph.css' %}">
+{% endblock %}
 {% block content %}
-<body>
     {% if graph %}
     {{ graph|safe }}
     {% else %}
     <p>No graph was provided.</p>
     {% endif %}
-</body>
+    
+    <div class="table-responsive">
+        <!-- cases table -->
+        <table class="table align-items-center table-flush sortable ">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Country</th>
+                <th scope="col">Confirmed</th>
+                <th scope="col">Recovered</th>
+                <th scope="col">Deaths</th>
+                <th scope="col">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Country in Countries %}
+                <tr>
+                    <td class="font-weight-bold">{{ "Poland" | truncatechars:18 }}</td>
+                    <td>{{ Country.Infected }}</td>
+                    <td>{{ Country.Recovered }}</td>
+                    <td>{{ Country.Dead }}</td>
+                    <td>{{ Country.Date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
