@@ -23,7 +23,8 @@
             </tr>
             </thead>
             <tbody>
-            {% for Country in Countries %}
+            {% for Country in Countries|slice:"::-1"|slice:":5"  %}
+
                 <tr>
                     <td class="font-weight-bold">{{ "Poland" | truncatechars:18 }}</td>
                     <td>{{ Country.Infected }}</td>

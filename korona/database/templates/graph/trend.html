@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block mycss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'graph/graph.css' %}">
+{% endblock %}
+{% block content %}
+    {% if graph %}
+    {{ graph|safe }}
+    {% else %}
+    <p>No graph was provided.</p>
+    {% endif %}
+
+{% endblock content %}
