@@ -15,7 +15,6 @@
         <table class="table align-items-center table-flush sortable ">
             <thead class="thead-light">
             <tr>
-                <th scope="col">Country</th>
                 <th scope="col">Confirmed</th>
                 <th scope="col">Recovered</th>
                 <th scope="col">Deaths</th>
@@ -26,7 +25,6 @@
             {% for Country in Countries|slice:"::-1"|slice:":5"  %}
 
                 <tr>
-                    <td class="font-weight-bold">{{ "Poland" | truncatechars:18 }}</td>
                     <td>{{ Country.Infected }}</td>
                     <td>{{ Country.Recovered }}</td>
                     <td>{{ Country.Dead }}</td>

@@ -2,6 +2,7 @@
 from django.shortcuts import render
 
 from .models import Country
+from django import forms
 
 from .plots import *
 from .preproces import Update_Day
@@ -11,12 +12,14 @@ import datetime
 import numpy as np
 import pandas as pd
 
+
 def mainpage(request):
     Update_Day()
     return render(request, "mainpage/mainpage.html")
 
 
 def wykres(request,country = "Poland"):
+    Update_Day()
     df = Get_Full_Data_Frame()
     # filtter to selected country
     df = df.loc[df['Country'] == country]
@@ -26,7 +29,7 @@ def wykres(request,country = "Poland"):
     Rec = go.Scatter(x=df["Date"], y=df["Recovered"], name='Recovered')
     fig.add_traces([Dead, Inf, Rec])
     #plotly.offline.plot(fig, filename="database/static_plots/wykers1" + '.html')
-    graph = fig.to_html(default_height=1000, default_width=1000)
+    graph = fig.to_html()
     context = {'graph': graph, 'Countries': Country.objects.all()}
     return render(request, 'graph/graph.html', context)
 
