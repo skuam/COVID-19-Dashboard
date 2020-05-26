@@ -42,9 +42,9 @@ def trend(request):
     fig = make_subplots(rows=3, cols=1, subplot_titles=("Deaths", "Confirmed", "Recovered"))
     date = df["Date"]
 
-    LowerBund = 10
+
     UpperBound = 14
-    predictionrange = np.arange(LowerBund, UpperBound+date.index[-1])
+    predictionrange = np.arange(5, UpperBound+date.index[-1])
 
     last = date.tail(1).values[0]
     upper = last + datetime.timedelta(days=UpperBound)
@@ -52,28 +52,28 @@ def trend(request):
 
     #prediction for dead
     yD = df["Dead"]
-    poly = np.polyfit(yD.index[10:], yD[10:], 4)
+    poly = np.polyfit(yD.index[10:], yD[10:], 1)
     predictionsDead = np.polyval(poly, predictionrange)
     Dead = go.Scatter(x=date, y=df["Dead"], name='Deaths')
-    DeadPred = go.Scatter(x=daterange, y=predictionsDead[date.index[-12]:], name='Predictions')
+    DeadPred = go.Scatter(x=daterange , y=predictionsDead[date.index[-14]:], name='Predictions')
     fig.append_trace(Dead, row=1, col=1)
     fig.append_trace(DeadPred, row=1, col=1)
 
     #prediction for infected
     yI = df["Infected"]
-    poly = np.polyfit(yI.index[10:], yI[10:], 4)
+    poly = np.polyfit(yI.index[10:], yI[10:], 1)
     predictionsInf = np.polyval(poly, predictionrange)
     Inf = go.Scatter(x=date, y=df["Infected"], name='Confirmed')
-    InfPred = go.Scatter(x=daterange, y=predictionsInf[date.index[-12]:], name='Prediction')
+    InfPred = go.Scatter(x=daterange, y=predictionsInf[date.index[-14]:], name='Prediction')
     fig.append_trace(Inf, row=2, col=1)
     fig.append_trace(InfPred, row=2, col=1)
 
     #prediction for Recoverd
     yR = df["Recovered"]
-    poly = np.polyfit(yR.index[10:], yR[10:], 3)
+    poly = np.polyfit(yR.index[30:], yR[30:], 1)
     predictionsRec = np.polyval(poly, predictionrange)
     Rec = go.Scatter(x=date, y=df["Recovered"], name='Recovered')
-    RecPred = go.Scatter(x=daterange, y=predictionsRec[date.index[-12]:], name='Prediction')
+    RecPred = go.Scatter(x=daterange, y=predictionsRec[date.index[-14]:], name='Prediction')
     fig.append_trace(Rec, row=3, col=1)
     fig.append_trace(RecPred, row=3, col=1)
 
