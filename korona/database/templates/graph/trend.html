@@ -4,10 +4,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'graph/graph.css' %}">
 {% endblock %}
 {% block content %}
+    <form>
+        <select name="country" id="country-select">
+            {% for c in country_list %}
+                <option value="{{c}}" {% if selectedCountry == c %}selected="selected"{% endif %}>{{c}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" method="GET" value="search"/>
+    </form>
+
+    {{ selectedCountry }}
+
     {% if graph %}
-    {{ graph|safe }}
+        {{ graph|safe }}
     {% else %}
-    <p>No graph was provided.</p>
+        <p>No graph was provided.</p>
     {% endif %}
 
 {% endblock content %}
