@@ -46,8 +46,6 @@ def Predict(country = "Poland", fitfor= "Dead",LowerBund = 10,UpperBound = 14 ):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x = date, y=y, name=fitfor))
 
-
-
     fig.add_trace(go.Scatter(x = daterange, y=predictions_poly, name="polynomial fit"))
 
    # fig.update_xaxes( tick0 = date[0], dtick = 86400000)

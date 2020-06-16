@@ -11,7 +11,9 @@ import plotly.graph_objects as go
 import datetime
 import numpy as np
 import pandas as pd
+from statsmodels.tsa.arima_model import ARIMA
 
+ARIMA
 selected_country = "Poland"
 
 
@@ -37,6 +39,8 @@ def wykres(request):
     return render(request, 'graph/graph.html', context)
 
 
+
+
 def trend(request):
     global selected_country
     if request.GET and request.GET['country']:
@@ -45,35 +49,53 @@ def trend(request):
     df = Get_Full_Data_Frame()
     country_list = df['Country'].unique()
     df = df.loc[df['Country'] == selected_country]
-
+    df.reset_index(inplace=True, drop=True)
     fig = make_subplots(rows=3, cols=1, subplot_titles=(
         "Deaths", "Confirmed", "Recovered"))
+
+
     date = df["Date"]
 
     UpperBound = 14
-    predictionrange = np.arange(5, UpperBound+date.index[-1])
+    predictionrange = np.arange(0, UpperBound+date.index[-1])
+
 
     last = date.tail(1).values[0]
     upper = last + datetime.timedelta(days=UpperBound)
-    daterange = pd.date_range(last, upper)
+    daterange = pd.date_range(last , upper)
 
     # prediction for dead
     yD = df["Dead"]
-    poly = np.polyfit(yD.index[10:], yD[10:], 1)
+    poly = np.polyfit(yD.index, yD, 1)
+
+
     predictionsDead = np.polyval(poly, predictionrange)
+    diff = abs(predictionsDead[date.index[-1]] - yD.tail(1).values[0])
+    if predictionsDead[date.index[-1]] > yD.tail(1).values[0]:
+        predictionsDead = np.round(predictionsDead - diff)
+    else:
+        predictionsDead = np.round(predictionsDead + diff)
+
     Dead = go.Scatter(x=date, y=df["Dead"], name='Deaths')
     DeadPred = go.Scatter(
-        x=daterange, y=predictionsDead[date.index[-14]:], name='Predictions')
+        x=daterange, y=predictionsDead[-14:], name='Predictions')
     fig.append_trace(Dead, row=1, col=1)
     fig.append_trace(DeadPred, row=1, col=1)
-
     # prediction for infected
     yI = df["Infected"]
     poly = np.polyfit(yI.index[10:], yI[10:], 1)
     predictionsInf = np.polyval(poly, predictionrange)
+
+    print(f"Parametry {poly}")
+    diff = abs(predictionsInf[date.index[-1]] - yI.tail(1).values[0])
+    if predictionsInf[date.index[-1]] > yI.tail(1).values[0]:
+        predictionsInf = np.round(predictionsInf - diff)
+    else:
+        predictionsInf = np.round(predictionsInf + diff)
+
     Inf = go.Scatter(x=date, y=df["Infected"], name='Confirmed')
     InfPred = go.Scatter(
-        x=daterange, y=predictionsInf[date.index[-14]:], name='Prediction')
+        x=daterange, y=predictionsInf[-14:], name='Prediction')
     fig.append_trace(Inf, row=2, col=1)
     fig.append_trace(InfPred, row=2, col=1)
 
@@ -81,9 +103,14 @@ def trend(request):
     yR = df["Recovered"]
     poly = np.polyfit(yR.index[30:], yR[30:], 1)
     predictionsRec = np.polyval(poly, predictionrange)
+    diff = abs(predictionsRec[date.index[-1]] - yR.tail(1).values[0])
+    if predictionsRec[date.index[-1]] > yR.tail(1).values[0]:
+        predictionsRec = np.round(predictionsRec - diff)
+    else:
+        predictionsRec = np.round(predictionsRec + diff)
     Rec = go.Scatter(x=date, y=df["Recovered"], name='Recovered')
     RecPred = go.Scatter(
-        x=daterange, y=predictionsRec[date.index[-14]:], name='Prediction')
+        x=daterange, y=predictionsRec[-14:], name='Prediction')
     fig.append_trace(Rec, row=3, col=1)
     fig.append_trace(RecPred, row=3, col=1)
 
